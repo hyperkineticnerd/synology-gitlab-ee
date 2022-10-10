@@ -28,7 +28,7 @@ quote_json() {
 }
 
 
-install_title="Install GitLab CE"
+install_title="Install GitLab EE"
 
 recommended_memory="Recommended memory size"
 mem_total_check_fail="A minimum of {1} RAM is required to install or update <a href=\"{2}\" target=\"_blank\">the latest version of GitLab</a>. Please expand the memory of your Synology NAS and try again."
@@ -131,10 +131,10 @@ After the installation is complete, you need to <a href=\"https://kb.synology.co
 You can copy this command with CTRL+C.<br>
 <br>
 <pre style=\"user-select: text; cursor: initial;\">
-cd /var/packages/synology-gitlab-ce/scripts && &bsol;
-sudo sh gitlab install synology-gitlab-ce &bsol;
+cd /var/packages/synology-gitlab-ee/scripts && &bsol;
+sudo sh gitlab install synology-gitlab-ee &bsol;
 --version=$GITLAB_IMAGE_VERSION &bsol;
---share=synology-gitlab-ce &bsol;
+--share=synology-gitlab-ee &bsol;
 --port-ssh=30022 &bsol;
 --port-http=30080 &bsol;
 --port-https=30443
@@ -150,7 +150,7 @@ EOF
 PageMemoryCheck()
 {
 	min_mem="4GB"
-	gitlab_mem_requirement_link=https://gitlab.com/gitlab-org/gitlab-ce/blob/v13.6.2/doc/install/requirements.md#memory
+	gitlab_mem_requirement_link=https://gitlab.com/gitlab-org/gitlab-ee/blob/v13.6.2/doc/install/requirements.md#memory
 	mem_total_check_fail=${mem_total_check_fail//\{1\}/"$min_mem"}
 	mem_total_check_fail=${mem_total_check_fail//\{2\}/"$gitlab_mem_requirement_link"}
 	mem_total_check_warning=${mem_total_check_warning//\{1\}/$min_mem}

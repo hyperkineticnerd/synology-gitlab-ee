@@ -64,7 +64,7 @@ fi
 validate_port $GITLAB_PORT
 
 ###########################################################
-# PROCESSING
+# PROEESSING
 ###########################################################
 if [ "$USER" != "root" ]; then
   echo "You must run this script as ROOT!"

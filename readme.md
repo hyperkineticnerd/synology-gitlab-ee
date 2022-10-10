@@ -1,6 +1,6 @@
-## synology-gitlab-ce
+## synology-gitlab-ee
 
-This is a docker based GitLab CE package for Synology NAS server using the original [gitlab/gitlab-ce](https://hub.docker.com/r/gitlab/gitlab-ce/) image from hub.docker.com. 
+This is a docker based GitLab EE package for Synology NAS server using the original [gitlab/gitlab-ee](https://hub.docker.com/r/gitlab/gitlab-ee/) image from hub.docker.com. 
 The goal of this project is to lower the entry barrier for new GitLab users and give experienced users a little comfort in maintaining their GitLab installation.     
 
 Everything this package does, can be also done manually over the Synology Docker NAS Application.    
@@ -9,7 +9,7 @@ Please note that I can not give you support for GitLab itself, this project cove
 If you need GitLab Support you might get it here [https://forum.gitlab.com](https://forum.gitlab.com). 
 
 ### Download SPK:
-You can download the SPK file in the [Releases](https://github.com/jboxberger/synology-gitlab-ce/releases) section.
+You can download the SPK file in the [Releases](https://github.com/jboxberger/synology-gitlab-ee/releases) section.
 
 ### Hardware Requirements:
 - 1 CPU core ( 2 cores is recommended )
@@ -25,7 +25,7 @@ forget to backup before. Upgrade to Advanced is possible, but be careful and bac
 
 <span style="color:red">WARNING: </span> All gitlab data will be deleted on uninstall! Backup berfore uninstalling!
 
-![Classic installer image](images/gitlab-ce-classic-1.png "Classic installer")
+![Classic installer image](images/gitlab-ee-classic-1.png "Classic installer")
 
 ### Advanced: 
 this approach bypass the root privileges limitation of the DSM by running the setup over ssh. The final container 
@@ -36,16 +36,16 @@ This way all your configuration remains the same and you can downgrade and upgra
 with your specific dataset. The ssh installer/updater gives you also the ability to run multiple gitlab container instances with 
 different container/versions and different data shares. You can test your upgrades and migrations without any risk and downtime.
 
-![Advanced installer DSM image](images/gitlab-ce-advanced-1.png "Advanced installer DSM")
+![Advanced installer DSM image](images/gitlab-ee-advanced-1.png "Advanced installer DSM")
 
 **Install Instance**
-![Advanced installer install image](images/gitlab-ce-advanced-3.png "Advanced installer install")
+![Advanced installer install image](images/gitlab-ee-advanced-3.png "Advanced installer install")
 
 **Update Instance**
-![Advanced installer update image](images/gitlab-ce-advanced-4.png "Advanced installer update")
+![Advanced installer update image](images/gitlab-ee-advanced-4.png "Advanced installer update")
 
 **Multiple Instances**
-![Advanced multiple instances](images/gitlab-ce-advanced-2.png "Advanced multiple instances")
+![Advanced multiple instances](images/gitlab-ee-advanced-2.png "Advanced multiple instances")
 
 ### Overview Advanced vs Classic
 | Feature                                                     | Advanced | Classic |
@@ -71,41 +71,41 @@ Except "jq" there are no special packages/binaries required.
 ```bash
 # Syntax: build.sh [options]
 # options:
-#   --version - GitLab CE version e.g. 13.4.3-ce.0, 
+#   --version - GitLab EE version e.g. 15.3.3-ee.0, 
 #               when no version given, a selection list of the latest
 #               available versions is shown
 #   --type    - package type (classic|advanced) - default: classic
 #   --dsm     - target DSM version (6|7) - default: 7
 
-./build.sh --version=13.4.3-ce.0 --dsm=7 --type=classic
+./build.sh --version=15.3.3-ee.0 --dsm=7 --type=classic
 ```
 
 ### Advanced Installer/Updater
 ```bash
-# Location: /var/packages/synology-gitlab-ce/scripts
+# Location: /var/packages/synology-gitlab-ee/scripts
 # Syntax: gitlab <action> <container> [options]
 # arguments:
 #   action       - install or update
 #   container    - container name
 # options:
-#   --version    - GitLab CE version e.g. 13.4.3-ce.0
+#   --version    - GitLab EE version e.g. 15.3.3-ee.0
 #   --share      - destination folder which will contain shared gitlab files
 #   --port-ssh   - ssh host port
 #   --port-http  - http host port
 #   --port-https - https host port
 
 # install
-cd /var/packages/synology-gitlab-ce/scripts && \
-sudo sh gitlab install synology-gitlab-ce \
---version=13.4.3-ce.0 \
---share=synology-gitlab-ce \
+cd /var/packages/synology-gitlab-ee/scripts && \
+sudo sh gitlab install synology-gitlab-ee \
+--version=15.3.3-ee.0 \
+--share=synology-gitlab-ee \
 --port-ssh=30022 \
 --port-http=30080 \
 --port-https=30443
 
 # update
-cd /var/packages/synology-gitlab-ce/scripts && \
-sudo sh gitlab update synology-gitlab-ce --version=13.4.5-ce.0
+cd /var/packages/synology-gitlab-ee/scripts && \
+sudo sh gitlab update synology-gitlab-ee --version=13.4.5-ee.0
 ```
 
 ### Connect into container
@@ -139,8 +139,8 @@ Please do not use this for public accessible instances, this approach only makes
 your LAN and you're lazy to do a proper SSL certificate and install it. In any other case i recommend you to use 
 the [GitLab Let's Encrypt](https://docs.gitlab.com/omnibus/settings/ssl.html#lets-encrypt-integration) integration.
 ```bash
-# Location: /var/packages/synology-gitlab-ce/scripts
-# Syntax: gitlab-self-signed-cert <action> [<container>] [options]
+# Location: /var/packages/synology-gitlab-ee/scripts
+# Syntax: gitlab-self-signed-eert <action> [<container>] [options]
 # arguments:
 #   action       - install
 #   container    - container name
@@ -148,21 +148,21 @@ the [GitLab Let's Encrypt](https://docs.gitlab.com/omnibus/settings/ssl.html#let
 #   --hostname   - gitlab hostname - default: xpenology
 #   --https-port - https port - default: 80443
 
-cd /var/packages/synology-gitlab-ce/scripts && \
-sudo sh gitlab-self-signed-cert install synology-gitlab-ce \
+cd /var/packages/synology-gitlab-ee/scripts && \
+sudo sh gitlab-self-signed-eert install synology-gitlab-ee \
   --hostname=xpenology --https-port=80443
 ```
 
 ### Shortcut helper
 If your GitLab shortcut in your DSM got broken or points to the wrong container (port) you can fix it with this helper anytime.
 ```bash
-# Location: /var/packages/synology-gitlab-ce/scripts
+# Location: /var/packages/synology-gitlab-ee/scripts
 # Syntax: gitlab-link-fix [options]
 # options:
 #   --protocol   - protocol http|https - default: http
 #   --port       - port - default: 30080
 
-cd /var/packages/synology-gitlab-ce/scripts && \
+cd /var/packages/synology-gitlab-ee/scripts && \
 sudo sh gitlab-link-fix --protocol=https --port=30443
 ```
 
@@ -198,9 +198,9 @@ sudo docker exec -it "<gitlab-container-name>" gitlab-ctl stop sidekiq
 # verify puma & sidekiq are down
 sudo docker exec -it "<gitlab-container-name>" gitlab-ctl status    
 # fix permissions
-sudo docker exec -it "<gitlab-container-name>" chown git:git /var/opt/gitlab/backups/1647529095_2022_03_17_13.4.3_gitlab_backup.tar
+sudo docker exec -it "<gitlab-container-name>" chown git:git /var/opt/gitlab/backups/1647529095_2022_03_17_15.3.3_gitlab_backup.tar
 # restore, please omit the "_gitlab_backup.tar" from the backup archive name
-sudo docker exec -it "<gitlab-container-name>" gitlab-backup restore BACKUP=1647529095_2022_03_17_13.4.3
+sudo docker exec -it "<gitlab-container-name>" gitlab-backup restore BACKUP=1647529095_2022_03_17_15.3.3
 
 # restart the GitLab container
 sudo docker restart "<gitlab-container-name>"
@@ -211,19 +211,19 @@ sudo docker exec -it "<gitlab-container-name>" gitlab-rake gitlab:check SANITIZE
 
 ### Migration from [synology-gitlab](https://github.com/jboxberger/synology-gitlab) package
 Migration can only be done within the same GitLab version. Its is basically a backup from synology-gitlab package and restore to
-the synology-gitlab-ce package.
+the synology-gitlab-ee package.
 ```bash
 # backup config 
 # @todo: not found a automated way yet
 # here is the config located but its structure differs from the omnibus package, need 
 # review and testing. For now, you can look up needed configuration and transfer it 
-# manually to your new synology-gitlab-ce instance
+# manually to your new synology-gitlab-ee instance
 sudo docker exec -w "/home/git/gitlab/config" -it synology_gitlab bash
 
 # backup data
 sudo docker exec -it synology_gitlab bash -c "sudo -u git -H bundle exec rake gitlab:backup:create RAILS_ENV=production CRON=1"
 
-# The synology-gitlab psql user differs from the synology-gitlab-ce so we need to 
+# The synology-gitlab psql user differs from the synology-gitlab-ee so we need to 
 # modify the database dump. Simply replace the "gitlab_user" with "gitlab". 
 # The tools/fix_synology_gitlab_backup does that for you. 
 # Syntax: fix_synology_gitlab_backup <file>

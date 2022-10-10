@@ -23,7 +23,7 @@ fi
 dockerhub_get_available_image_version_list() {
   local image_name="$1"
   local page_size=20
-  local version_list=$(curl https://hub.docker.com/v2/repositories/"$image_name"/tags?page_size=$page_size 2>/dev/null | jq -r '.results[].name' | grep "\-ce")
+  local version_list=$(curl https://hub.docker.com/v2/repositories/"$image_name"/tags?page_size=$page_size 2>/dev/null | jq -r '.results[].name' | grep "\-ee")
   local version_list_sorted=""
   readarray -td '' version_list_sorted < <(printf '%s\n' "${version_list[@]}" | sort -ru)
   echo ${version_list_sorted[@]}
@@ -82,13 +82,13 @@ help()
    # Display Help
    echo "Syntax: build [options]"
    echo "options:"
-   echo "  --version - GitLab CE version e.g. 13.4.3-ce.0, "
+   echo "  --version - GitLab EE version e.g. 15.3.3-ee.0, "
    echo "              when no version given, a selection list of the latest"
    echo "              available versions is shown"
    echo "  --type    - package type (classic|advanced) - default: classic"
    echo "  --dsm     - target DSM version (6|7) - default: 7"
    echo
-   echo "Example: build --version=13.4.3-ce.0 --dsm=7 --type=classic"
+   echo "Example: build --version=15.3.3-ee.0 --dsm=7 --type=classic"
    exit 0
 }
 
@@ -97,7 +97,7 @@ help()
 ###########################################################
 PACKAGE_TYPE="classic"
 DSM_VERSION="7"
-GITLAB_IMAGE_NAME="gitlab/gitlab-ce"
+GITLAB_IMAGE_NAME="gitlab/gitlab-ee"
 GITLAB_IMAGE_VERSION=""
 
 DIRECTORY_SPK="./spk"
@@ -148,8 +148,8 @@ if [ -z "$GITLAB_IMAGE_VERSION" ]; then
   GITLAB_IMAGE_VERSION=$(show_select_menu_with_default "${GITLAB_VERSION_LIST[@]:0:9}") # take only first 9 items
 fi
 
-if [ "$(expr "$GITLAB_IMAGE_VERSION" : '^[0-9\.]*-ce\.[0-9]$')" -eq 0 ]; then
-  echo "invalid version pattern '$GITLAB_IMAGE_VERSION', e.g. 13.4.3-ce.0"
+if [ "$(expr "$GITLAB_IMAGE_VERSION" : '^[0-9\.]*-ee\.[0-9]$')" -eq 0 ]; then
+  echo "invalid version pattern '$GITLAB_IMAGE_VERSION', e.g. 15.3.3-ee.0"
   exit 1
 fi
 
@@ -193,11 +193,11 @@ GITLAB_IMAGE_VERSION_SHORT=$(echo "$GITLAB_IMAGE_VERSION" | cut -f1 -d-)
 # UPDATE INFO FILE
 sed -i -e "/^version=/s/=.*/=\"$GITLAB_IMAGE_VERSION_SHORT\"/" "$DIRECTORY_TMP/INFO"
 sed -i -e "/^os_min_ver=/s/=.*/=\"$DSM_VERSION.0-00000\"/" "$DIRECTORY_TMP/INFO"
-sed -i -e "/^description=/s/=.*/=\"GitLab CE docker container ($PACKAGE_TYPE)\"/" "$DIRECTORY_TMP/INFO"
+sed -i -e "/^description=/s/=.*/=\"GitLab EE docker container ($PACKAGE_TYPE)\"/" "$DIRECTORY_TMP/INFO"
 sed -i -e "/^extractsize=/s/=.*/=\"$EXTRACTSIZE\"/" "$DIRECTORY_TMP/INFO"
 
 # CREATE FILE
-OUTPUT_FILE_NAME="synology-gitlab-ce-$GITLAB_IMAGE_VERSION_SHORT-dsm$DSM_VERSION-$PACKAGE_TYPE.spk"
+OUTPUT_FILE_NAME="synology-gitlab-ee-$GITLAB_IMAGE_VERSION_SHORT-dsm$DSM_VERSION-$PACKAGE_TYPE.spk"
 cd "$DIRECTORY_TMP/" && tar --format=gnu -cf "../$DIRECTORY_SPK/$OUTPUT_FILE_NAME" * && cd ../
 
 rm -rf "$DIRECTORY_TMP"

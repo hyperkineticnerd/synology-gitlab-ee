@@ -11,13 +11,13 @@ help() {
    echo "  action       - install or update"
    echo "  container    - container name"
    echo "options:"
-   echo "  --version    - GitLab CE version e.g. 13.4.3-ce.0"
+   echo "  --version    - GitLab EE version e.g. 15.3.3-ee.0"
    echo "  --share      - destination folder which will contain shared gitlab files"
    echo "  --port-ssh   - ssh host port"
    echo "  --port-http  - http host port"
    echo "  --port-https - https host port"
    echo
-   echo "Example: gitlab install|update synology-gitlab-ce --version=13.4.3-ce.0 --share=gitlab-dir"
+   echo "Example: gitlab install|update synology-gitlab-ee --version=15.3.3-ee.0 --share=gitlab-dir"
    exit 0
 }
 
@@ -87,7 +87,7 @@ if [ -z "$GITLAB_CONTAINER_NAME" ] ; then
 fi
 
 ###########################################################
-# PROCESSING
+# PROEESSING
 ###########################################################
 if [ "$USER" != "root" ]; then
   echo "You must run this script as ROOT!"
@@ -98,7 +98,7 @@ check_dependencies "jq docker curl synowebapi synoshare"
 # system
 DOCKER_SHARE_PATH="$(synoshare --get docker | grep $'\t Path' | sed 's/.*\[\(.*\)].*/\1/')"
 DOCKER_SHARE_BASE_PATH=$(basename "$DOCKER_SHARE_PATH")
-GITLAB_IMAGE_NAME="gitlab/gitlab-ce"
+GITLAB_IMAGE_NAME="gitlab/gitlab-ee"
 GITLAB_CONTAINER_CONFIG="$SCRIPTS_PATH/$GITLAB_CONTAINER_NAME_DEFAULT.json"
 GITLAB_CONTAINER_CONFIG_TEMPLATE="$SCRIPTS_PATH/templates/$GITLAB_CONTAINER_NAME_DEFAULT.template.json"
 GITLAB_VERSION_CURRENT="none"
@@ -182,7 +182,7 @@ if [ -z "$proceed" ] || [ "$proceed" != "y" ] && [ "$proceed" != "Y" ] ; then
 fi
 
 ###########################################################
-# PROCESSING
+# PROEESSING
 ###########################################################
 if [ "$EXECUTION_MODE" = "install" ]; then
   if [ ! -f "$GITLAB_CONTAINER_CONFIG_TEMPLATE" ]; then

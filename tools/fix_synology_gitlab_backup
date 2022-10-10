@@ -51,7 +51,7 @@ done
 eval set -- "$PARAMS"
 
 ###########################################################
-# PROCESSING
+# PROEESSING
 ###########################################################
 # file exists
 if [ ! -f "$1" ]; then
@@ -78,7 +78,7 @@ tar -xf "$GITLAB_BACKUP_FILE_NAME" && rm -f "$GITLAB_BACKUP_FILE_NAME"
 # extract db file
 cd db && gzip -d database.sql.gz
 
-#---------------------- PROCESS ---------------------------
+#---------------------- PROEESS ---------------------------
 # replace gitlab_user with gitlab
 sed -i -e "s|gitlab_user|gitlab|g" "database.sql"
 

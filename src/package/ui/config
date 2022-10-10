@@ -1,13 +1,13 @@
 {
     ".url": {
-        "SYNO.SDS.synology-gitlab-ce": {
+        "SYNO.SDS.synology-gitlab-ee": {
             "allUsers": true,
-            "desc": "GitLab CE",
+            "desc": "GitLab EE",
             "icon": "images/GitLab_{0}.png",
             "port": "__PORT__",
             "protocol": "http",
             "texts": "texts",
-            "title": "GitLab CE",
+            "title": "GitLab EE",
             "type": "url",
             "url": "/"
         }

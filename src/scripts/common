@@ -1,7 +1,7 @@
 #!/bin/sh
 # Copyright (c) 2000-2015 Synology Inc. All rights reserved.
 
-PKG_NAME="synology-gitlab-ce"
+PKG_NAME="synology-gitlab-ee"
 PKG_PATH="/var/packages/$PKG_NAME"
 ETC_PATH="$PKG_PATH/etc"
 SCRIPTS_PATH="$PKG_PATH/scripts"
@@ -32,7 +32,7 @@ get_latest_version_number_from_dockerhub() {
   version="$(curl https://hub.docker.com/v2/repositories/"$image_name"/tags 2>/dev/null | jq -r '.results[].name' | tr "\n" ' ')"
 
   latest=$(echo "$version" | tr ' ' '\n' | while read item; do
-    if [ -n "$item" ] && [ "$(expr "$item" : '^[0-9\.]*-ce\.[0-9]$')" -gt 0 ] ; then
+    if [ -n "$item" ] && [ "$(expr "$item" : '^[0-9\.]*-ee\.[0-9]$')" -gt 0 ] ; then
       echo "$item"
       break;
     fi
