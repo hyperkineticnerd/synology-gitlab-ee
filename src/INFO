@@ -9,7 +9,7 @@ install_dep_packages="Docker>=1.6.2-0035"
 
 thirdparty="yes"
 
-maintainer="Juri Boxberger"
-maintainer_url="https://github.com/jboxberger/synology-gitlab-ee"
+maintainer="Sean Nelson"
+maintainer_url="https://github.com/hyperkineticnerd/synology-gitlab-ee"
 
 dsmuidir="ui"

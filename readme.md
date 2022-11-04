@@ -9,7 +9,7 @@ Please note that I can not give you support for GitLab itself, this project cove
 If you need GitLab Support you might get it here [https://forum.gitlab.com](https://forum.gitlab.com). 
 
 ### Download SPK:
-You can download the SPK file in the [Releases](https://github.com/jboxberger/synology-gitlab-ee/releases) section.
+You can download the SPK file in the [Releases](https://github.com/hyperkineticnerd/synology-gitlab-ee/releases) section.
 
 ### Hardware Requirements:
 - 1 CPU core ( 2 cores is recommended )
@@ -209,7 +209,7 @@ sudo docker restart "<gitlab-container-name>"
 sudo docker exec -it "<gitlab-container-name>" gitlab-rake gitlab:check SANITIZE=true
 ```
 
-### Migration from [synology-gitlab](https://github.com/jboxberger/synology-gitlab) package
+### Migration from [synology-gitlab](https://github.com/hyperkineticnerd/synology-gitlab) package
 Migration can only be done within the same GitLab version. Its is basically a backup from synology-gitlab package and restore to
 the synology-gitlab-ee package.
 ```bash
